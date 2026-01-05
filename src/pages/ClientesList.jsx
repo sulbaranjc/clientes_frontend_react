@@ -5,6 +5,9 @@ import Button from 'react-bootstrap/Button'
 import Spinner from 'react-bootstrap/Spinner'
 import Alert from 'react-bootstrap/Alert'
 import { Link } from 'react-router-dom'
+import ConfirmDeleteModal from '../components/ConfirmDeleteModal'
+import { deleteCliente } from '../services/clientesService'
+
 
 import { getClientes } from '../services/clientesService'
 
@@ -12,6 +15,8 @@ export default function ClientesList() {
   const [clientes, setClientes] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [showModal, setShowModal] = useState(false)
+  const [clienteSeleccionado, setClienteSeleccionado] = useState(null)
 
   useEffect(() => {
     async function cargarClientes() {
@@ -27,6 +32,30 @@ export default function ClientesList() {
 
     cargarClientes()
   }, [])
+
+function abrirModal(cliente) {
+  setClienteSeleccionado(cliente)
+  setShowModal(true)
+}
+
+function cerrarModal() {
+  setShowModal(false)
+  setClienteSeleccionado(null)
+}
+
+async function confirmarEliminacion() {
+  try {
+    await deleteCliente(clienteSeleccionado.id)
+    setClientes(prev =>
+      prev.filter(c => c.id !== clienteSeleccionado.id)
+    )
+  } catch (err) {
+    alert(err.message)
+  } finally {
+    cerrarModal()
+  }
+}
+
 
   return (
     <Container>
@@ -113,7 +142,7 @@ export default function ClientesList() {
                         size="sm"
                         variant="danger"
                         title="Eliminar cliente"
-                        disabled
+                        onClick={() => abrirModal(cliente)}
                       >
                         <i className="bi bi-trash"></i>
                       </Button>
@@ -131,6 +160,12 @@ export default function ClientesList() {
           </div>
         </div>
       )}
+      <ConfirmDeleteModal
+        show={showModal}
+        onHide={cerrarModal}
+        onConfirm={confirmarEliminacion}
+        cliente={clienteSeleccionado}
+      />
     </Container>
   )
 }
