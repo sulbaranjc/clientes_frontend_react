@@ -20,58 +20,28 @@ Este proyecto tiene como finalidad enseñar:
 ### Diagrama de Arquitectura
 ```mermaid
 flowchart TD
-    A[App.jsx<br/>(Componente Principal)]
-    B[React Router<br/>(Rutas)]
+    A["App.jsx
+    (Componente Principal)"]
+    B["React Router
+    (Rutas)"]
 
     A --> B
 
-    B --> C[ClientesList.jsx<br/>(Listar)]
-    B --> D[ClienteNuevo.jsx<br/>(Crear)]
-    B --> E[ClienteEditar.jsx<br/>(Editar)]
+    B --> C["ClientesList.jsx
+    (Listar)"]
+    B --> D["ClienteNuevo.jsx
+    (Crear)"]
+    B --> E["ClienteEditar.jsx
+    (Editar)"]
 
-    C --> F[clientesService.js<br/>(Capa de Servicios)]
+    C --> F["clientesService.js
+    (Capa de Servicios)"]
     D --> F
     E --> F
 
-    F -->|HTTP / JSON| G[API REST<br/>FastAPI<br/>Puerto 8000]
-```
-
-
-
-```
-┌─────────────────────────────────────────────────────┐
-│                   FRONTEND (React)                  │
-├─────────────────────────────────────────────────────┤
-│                                                     │
-│  ┌──────────────┐    ┌──────────────┐               │
-│  │   App.jsx    │───▶│ React Router │               │
-│  │ (Principal)  │    │   (Rutas)    │               │
-│  └──────────────┘    └──────┬───────┘               │
-│                              │                      │
-│         ┌────────────────────┼────────────────┐     │
-│         │                    │                │     │
-│    ┌────▼─────┐      ┌──────▼──────┐   ┌─────▼────┐ │
-│    │ Clientes │      │   Cliente   │   │ Cliente  │ │
-│    │   List   │      │    Nuevo    │   │  Editar  │ │
-│    │  (Listar)│      │  (Crear)    │   │(Modificar) │
-│    └────┬─────┘      └──────┬──────┘   └─────┬────┘ │
-│         │                   │                │      │
-│         └───────────────────┼────────────────┘      │
-│                             │                       │
-│                    ┌────────▼────────┐              │
-│                    │ clientesService │              │
-│                    │   (Capa de      │              │
-│                    │    Servicios)   │              │
-│                    └────────┬────────┘              │
-│                             │                       │
-└─────────────────────────────┼───────────────────────┘
-                              │ HTTP/JSON
-                              │
-                    ┌─────────▼────────┐
-                    │   API REST       │
-                    │  (FastAPI)       │
-                    │ Port: 8000       │
-                    └──────────────────┘
+    F -->|HTTP / JSON| G["API REST
+    FastAPI
+    Puerto 8000"]
 ```
 
 ### Patrón de Arquitectura
