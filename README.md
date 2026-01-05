@@ -18,6 +18,25 @@ Este proyecto tiene como finalidad enseñar:
 ## 🏗️ Arquitectura del Proyecto
 
 ### Diagrama de Arquitectura
+```mermaid
+flowchart TD
+    A[App.jsx<br/>(Componente Principal)]
+    B[React Router<br/>(Rutas)]
+
+    A --> B
+
+    B --> C[ClientesList.jsx<br/>(Listar)]
+    B --> D[ClienteNuevo.jsx<br/>(Crear)]
+    B --> E[ClienteEditar.jsx<br/>(Editar)]
+
+    C --> F[clientesService.js<br/>(Capa de Servicios)]
+    D --> F
+    E --> F
+
+    F -->|HTTP / JSON| G[API REST<br/>FastAPI<br/>Puerto 8000]
+```
+
+
 
 ```
 ┌─────────────────────────────────────────────────────┐
