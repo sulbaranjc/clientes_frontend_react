@@ -20,6 +20,14 @@ export default function ClienteEditar() {
     direccion: ''
   })
 
+  const [datosOriginales, setDatosOriginales] = useState({
+    nombre: '',
+    apellido: '',
+    email: '',
+    telefono: '',
+    direccion: ''
+  })
+
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [errores, setErrores] = useState([])
@@ -28,13 +36,15 @@ export default function ClienteEditar() {
     async function cargarCliente() {
       try {
         const data = await getClienteById(id)
-        setFormData({
+        const datosCliente = {
           nombre: data.nombre,
           apellido: data.apellido,
           email: data.email,
           telefono: data.telefono || '',
           direccion: data.direccion || ''
-        })
+        }
+        setFormData(datosCliente)
+        setDatosOriginales(datosCliente)
       } catch (err) {
         setErrores([err.message])
       } finally {
@@ -44,6 +54,11 @@ export default function ClienteEditar() {
 
     cargarCliente()
   }, [id])
+
+  // Función para detectar si hay cambios
+  function hayChangios() {
+    return JSON.stringify(formData) !== JSON.stringify(datosOriginales)
+  }
 
   function handleChange(e) {
     const { name, value } = e.target
@@ -55,6 +70,13 @@ export default function ClienteEditar() {
 
   async function handleSubmit(e) {
     e.preventDefault()
+    
+    // Validar que haya cambios
+    if (!hayChangios()) {
+      setErrores(['No hay cambios que guardar'])
+      return
+    }
+    
     setErrores([])
     setSaving(true)
 
@@ -159,7 +181,11 @@ export default function ClienteEditar() {
         </Form.Group>
 
         <div className="d-grid gap-2">
-          <Button type="submit" variant="success" disabled={saving}>
+          <Button 
+            type="submit" 
+            variant="success" 
+            disabled={saving || !hayChangios()}
+          >
             <i className="bi bi-check-circle me-2"></i>
             {saving ? 'Guardando...' : 'Guardar Cambios'}
           </Button>
