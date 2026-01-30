@@ -1,0 +1,127 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.2.5 Chrome/138.0.7204.251 Electron/37.6.1 Safari/537.36" version="28.2.5">
+  <diagram name="Página-1" id="qrKn8_TWCEQXfC2Ks7fi">
+    <mxGraphModel dx="1959" dy="1214" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="PRTGMRHevdlyxTI5tctS-63" value="Navegador Web" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="20" y="305" width="150" height="844" as="geometry" />
+        </mxCell>
+        <mxCell id="PRTGMRHevdlyxTI5tctS-64" value="Usuario" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="355" y="305" width="150" height="844" as="geometry" />
+        </mxCell>
+        <mxCell id="PRTGMRHevdlyxTI5tctS-65" value="main.jsx" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="555" y="305" width="150" height="844" as="geometry" />
+        </mxCell>
+        <mxCell id="PRTGMRHevdlyxTI5tctS-66" value="App.jsx" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="825" y="305" width="150" height="844" as="geometry" />
+        </mxCell>
+        <mxCell id="PRTGMRHevdlyxTI5tctS-67" value="ClientesList.jsx" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="1025" y="305" width="150" height="844" as="geometry" />
+        </mxCell>
+        <mxCell id="PRTGMRHevdlyxTI5tctS-68" value="clientesService.js" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="1225" y="305" width="150" height="844" as="geometry" />
+        </mxCell>
+        <mxCell id="PRTGMRHevdlyxTI5tctS-69" value="API FastAPI" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="1431" y="305" width="150" height="844" as="geometry" />
+        </mxCell>
+        <mxCell id="PRTGMRHevdlyxTI5tctS-70" value="Base de Datos" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="1631" y="305" width="150" height="844" as="geometry" />
+        </mxCell>
+        <mxCell id="PRTGMRHevdlyxTI5tctS-71" value="Introduce URL http://localhost:5173/" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="PRTGMRHevdlyxTI5tctS-64" target="PRTGMRHevdlyxTI5tctS-63">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="274" y="408" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PRTGMRHevdlyxTI5tctS-72" value="Carga aplicacion React" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="PRTGMRHevdlyxTI5tctS-63" target="PRTGMRHevdlyxTI5tctS-65">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="371" y="456" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PRTGMRHevdlyxTI5tctS-73" value="Renderiza componente App" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="PRTGMRHevdlyxTI5tctS-65" target="PRTGMRHevdlyxTI5tctS-66">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="774" y="504" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PRTGMRHevdlyxTI5tctS-74" value="Configura BrowserRouter" style="curved=1;endArrow=block;rounded=0;" edge="1" parent="1" source="PRTGMRHevdlyxTI5tctS-66" target="PRTGMRHevdlyxTI5tctS-66">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="951" y="552" />
+              <mxPoint x="951" y="582" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PRTGMRHevdlyxTI5tctS-75" value="Renderiza ruta /" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="PRTGMRHevdlyxTI5tctS-66" target="PRTGMRHevdlyxTI5tctS-67">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1009" y="630" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PRTGMRHevdlyxTI5tctS-76" value="useEffect al montar componente" style="curved=1;endArrow=block;rounded=0;" edge="1" parent="1" source="PRTGMRHevdlyxTI5tctS-67" target="PRTGMRHevdlyxTI5tctS-67">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1151" y="678" />
+              <mxPoint x="1151" y="708" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PRTGMRHevdlyxTI5tctS-77" value="getClientes()" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="PRTGMRHevdlyxTI5tctS-67" target="PRTGMRHevdlyxTI5tctS-68">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1209" y="756" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PRTGMRHevdlyxTI5tctS-78" value="HTTP GET /clientes" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="PRTGMRHevdlyxTI5tctS-68" target="PRTGMRHevdlyxTI5tctS-69">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1412" y="804" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PRTGMRHevdlyxTI5tctS-79" value="Consulta clientes" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="PRTGMRHevdlyxTI5tctS-69" target="PRTGMRHevdlyxTI5tctS-70">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1615" y="852" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PRTGMRHevdlyxTI5tctS-80" value="Lista de clientes" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="PRTGMRHevdlyxTI5tctS-70" target="PRTGMRHevdlyxTI5tctS-69">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1618" y="900" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PRTGMRHevdlyxTI5tctS-81" value="Respuesta JSON" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="PRTGMRHevdlyxTI5tctS-69" target="PRTGMRHevdlyxTI5tctS-68">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1415" y="948" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PRTGMRHevdlyxTI5tctS-82" value="Datos clientes" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="PRTGMRHevdlyxTI5tctS-68" target="PRTGMRHevdlyxTI5tctS-67">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1212" y="996" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PRTGMRHevdlyxTI5tctS-83" value="Renderiza listado en pantalla" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="PRTGMRHevdlyxTI5tctS-67" target="PRTGMRHevdlyxTI5tctS-64">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="777" y="1044" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
