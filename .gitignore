@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Documentación local (no subir a GitHub - contiene información sensible)
+DOCUMENTACION_DESPLIEGUE_CI-CD.md
