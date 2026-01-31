@@ -1,0 +1,39 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: deploy
+
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /home/sulbaranjc/apps/clientes_frontend_react
+            
+            echo "📥 Actualizando código desde GitHub..."
+            git fetch origin
+            git checkout deploy
+            git pull origin deploy
+            
+            echo "🐳 Deteniendo contenedores..."
+            docker-compose down
+            
+            echo "🔨 Construyendo e iniciando contenedores..."
+            docker-compose up -d --build
+            
+            echo "✅ Despliegue completado exitosamente"
+            docker ps
