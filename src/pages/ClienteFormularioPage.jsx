@@ -6,11 +6,12 @@ import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
 import Spinner from 'react-bootstrap/Spinner'
 
-import { getClienteById, updateCliente } from '../services/clientesService'
+import { createCliente, updateCliente, getClienteById } from '../services/clientesService'
 
-export default function ClienteEditar() {
+export default function ClienteFormularioPage() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const isEditing = Boolean(id)
 
   const [formData, setFormData] = useState({
     nombre: '',
@@ -28,11 +29,14 @@ export default function ClienteEditar() {
     direccion: ''
   })
 
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(isEditing) // Solo carga si está editando
   const [saving, setSaving] = useState(false)
   const [errores, setErrores] = useState([])
 
+  // Cargar datos del cliente si está editando
   useEffect(() => {
+    if (!isEditing) return // Si no está editando, no necesita cargar datos
+
     async function cargarCliente() {
       try {
         const data = await getClienteById(id)
@@ -53,10 +57,11 @@ export default function ClienteEditar() {
     }
 
     cargarCliente()
-  }, [id])
+  }, [id, isEditing])
 
-  // Función para detectar si hay cambios
+  // Función para detectar si hay cambios (solo para modo edición)
   function hayChangios() {
+    if (!isEditing) return true // Siempre hay "cambios" al crear
     return JSON.stringify(formData) !== JSON.stringify(datosOriginales)
   }
 
@@ -71,8 +76,8 @@ export default function ClienteEditar() {
   async function handleSubmit(e) {
     e.preventDefault()
     
-    // Validar que haya cambios
-    if (!hayChangios()) {
+    // Validar que haya cambios solo en modo edición
+    if (isEditing && !hayChangios()) {
       setErrores(['No hay cambios que guardar'])
       return
     }
@@ -81,11 +86,17 @@ export default function ClienteEditar() {
     setSaving(true)
 
     try {
-      await updateCliente(id, {
+      const clienteDataToSend = {
         ...formData,
         telefono: formData.telefono || null,
         direccion: formData.direccion || null
-      })
+      }
+
+      if (isEditing) {
+        await updateCliente(id, clienteDataToSend)
+      } else {
+        await createCliente(clienteDataToSend)
+      }
 
       navigate('/')
     } catch (err) {
@@ -100,20 +111,29 @@ export default function ClienteEditar() {
     }
   }
 
+  // Mostrar loading solo al cargar datos para editar
   if (loading) {
     return (
       <div className="text-center my-5">
         <Spinner animation="border" />
+        <p className="mt-3">Cargando datos del cliente...</p>
       </div>
     )
   }
 
+  const titulo = isEditing ? 'Editar Cliente' : 'Agregar Nuevo Cliente'
+  const descripcion = isEditing 
+    ? 'Modifique los datos del cliente y guarde los cambios.'
+    : 'Complete el formulario para registrar un nuevo cliente en el sistema.'
+  const textoBoton = isEditing ? 'Guardar Cambios' : 'Guardar Cliente'
+  const textoBotonCargando = 'Guardando...'
+  const varianteBoton = isEditing ? 'success' : 'primary'
+  const iconoBoton = isEditing ? 'bi-check-circle' : 'bi-save'
+
   return (
     <Container>
-      <h1 className="text-center mb-4">Editar Cliente</h1>
-      <p className="lead text-center mb-5">
-        Modifique los datos del cliente y guarde los cambios.
-      </p>
+      <h1 className="text-center mb-4">{titulo}</h1>
+      <p className="lead text-center mb-5">{descripcion}</p>
 
       {errores.length > 0 && (
         <Alert variant="danger">
@@ -183,11 +203,11 @@ export default function ClienteEditar() {
         <div className="d-grid gap-2">
           <Button 
             type="submit" 
-            variant="success" 
-            disabled={saving || !hayChangios()}
+            variant={varianteBoton} 
+            disabled={saving || (isEditing && !hayChangios())}
           >
-            <i className="bi bi-check-circle me-2"></i>
-            {saving ? 'Guardando...' : 'Guardar Cambios'}
+            <i className={`${iconoBoton} me-2`}></i>
+            {saving ? textoBotonCargando : textoBoton}
           </Button>
 
           <Button
