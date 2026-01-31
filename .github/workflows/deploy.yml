@@ -22,18 +22,39 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd /home/sulbaranjc/apps/clientes_frontend_react
+            set -e
             
-            echo "📥 Actualizando código desde GitHub..."
-            git fetch origin
-            git checkout deploy
-            git pull origin deploy
+            PROJECT_DIR="/home/sulbaranjc/apps/clientes_frontend_react"
             
-            echo "🐳 Deteniendo contenedores..."
-            docker-compose down
+            echo "════════════════════════════════════════"
+            echo "📥 ACTUALIZANDO CÓDIGO DESDE GITHUB"
+            echo "════════════════════════════════════════"
+            cd "$PROJECT_DIR" || { echo "ERROR: No se encontró el directorio"; exit 1; }
             
-            echo "🔨 Construyendo e iniciando contenedores..."
-            docker-compose up -d --build
+            git fetch origin || { echo "ERROR: No se pudo descargar de GitHub"; exit 1; }
+            git checkout deploy || { echo "ERROR: No se pudo cambiar a rama deploy"; exit 1; }
+            git pull origin deploy || { echo "ERROR: No se pudo hacer pull de deploy"; exit 1; }
             
-            echo "✅ Despliegue completado exitosamente"
+            echo "✓ Código actualizado correctamente"
+            echo ""
+            echo "════════════════════════════════════════"
+            echo "🐳 DETENIENDO CONTENEDORES ANTIGUOS"
+            echo "════════════════════════════════════════"
+            docker compose down || { echo "ERROR: No se pudo detener contenedores"; exit 1; }
+            
+            echo "✓ Contenedores detenidos"
+            echo ""
+            echo "════════════════════════════════════════"
+            echo "🔨 CONSTRUYENDO E INICIANDO CONTENEDORES"
+            echo "════════════════════════════════════════"
+            docker compose up -d --build || { echo "ERROR: No se pudo iniciar contenedores"; exit 1; }
+            
+            echo "✓ Contenedores iniciados"
+            echo ""
+            echo "════════════════════════════════════════"
+            echo "✅ DESPLIEGUE COMPLETADO EXITOSAMENTE"
+            echo "════════════════════════════════════════"
             docker ps
+            echo ""
+            echo "Estado de docker-compose:"
+            docker compose ps
