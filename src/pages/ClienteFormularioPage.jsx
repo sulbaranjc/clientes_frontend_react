@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
@@ -6,112 +5,32 @@ import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
 import Spinner from 'react-bootstrap/Spinner'
 
-import { createCliente, updateCliente, getClienteById } from '../services/clientesService'
+import { useClienteForm } from '../hooks/useClienteForm'
+import { FORM_CONFIG } from '../constants/formConfig'
 
 export default function ClienteFormularioPage() {
   const { id } = useParams()
   const navigate = useNavigate()
   const isEditing = Boolean(id)
 
-  const [formData, setFormData] = useState({
-    nombre: '',
-    apellido: '',
-    email: '',
-    telefono: '',
-    direccion: ''
-  })
+  const {
+    formData,
+    loading,
+    saving,
+    errores,
+    handleChange,
+    hayChangios,
+    submitForm
+  } = useClienteForm(isEditing, id)
 
-  const [datosOriginales, setDatosOriginales] = useState({
-    nombre: '',
-    apellido: '',
-    email: '',
-    telefono: '',
-    direccion: ''
-  })
-
-  const [loading, setLoading] = useState(isEditing) // Solo carga si está editando
-  const [saving, setSaving] = useState(false)
-  const [errores, setErrores] = useState([])
-
-  // Cargar datos del cliente si está editando
-  useEffect(() => {
-    if (!isEditing) return // Si no está editando, no necesita cargar datos
-
-    async function cargarCliente() {
-      try {
-        const data = await getClienteById(id)
-        const datosCliente = {
-          nombre: data.nombre,
-          apellido: data.apellido,
-          email: data.email,
-          telefono: data.telefono || '',
-          direccion: data.direccion || ''
-        }
-        setFormData(datosCliente)
-        setDatosOriginales(datosCliente)
-      } catch (err) {
-        setErrores([err.message])
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    cargarCliente()
-  }, [id, isEditing])
-
-  // Función para detectar si hay cambios (solo para modo edición)
-  function hayChangios() {
-    if (!isEditing) return true // Siempre hay "cambios" al crear
-    return JSON.stringify(formData) !== JSON.stringify(datosOriginales)
-  }
-
-  function handleChange(e) {
-    const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
-  }
-
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    
-    // Validar que haya cambios solo en modo edición
-    if (isEditing && !hayChangios()) {
-      setErrores(['No hay cambios que guardar'])
-      return
-    }
-    
-    setErrores([])
-    setSaving(true)
-
-    try {
-      const clienteDataToSend = {
-        ...formData,
-        telefono: formData.telefono || null,
-        direccion: formData.direccion || null
-      }
-
-      if (isEditing) {
-        await updateCliente(id, clienteDataToSend)
-      } else {
-        await createCliente(clienteDataToSend)
-      }
-
+    const success = await submitForm()
+    if (success) {
       navigate('/')
-    } catch (err) {
-      if (Array.isArray(err.detail)) {
-        const mensajes = err.detail.map(e => e.msg)
-        setErrores(mensajes)
-      } else {
-        setErrores([err.message || 'Error desconocido'])
-      }
-    } finally {
-      setSaving(false)
     }
   }
 
-  // Mostrar loading solo al cargar datos para editar
   if (loading) {
     return (
       <div className="text-center my-5">
@@ -121,19 +40,12 @@ export default function ClienteFormularioPage() {
     )
   }
 
-  const titulo = isEditing ? 'Editar Cliente' : 'Agregar Nuevo Cliente'
-  const descripcion = isEditing 
-    ? 'Modifique los datos del cliente y guarde los cambios.'
-    : 'Complete el formulario para registrar un nuevo cliente en el sistema.'
-  const textoBoton = isEditing ? 'Guardar Cambios' : 'Guardar Cliente'
-  const textoBotonCargando = 'Guardando...'
-  const varianteBoton = isEditing ? 'success' : 'primary'
-  const iconoBoton = isEditing ? 'bi-check-circle' : 'bi-save'
+  const config = isEditing ? FORM_CONFIG.EDIT : FORM_CONFIG.CREATE
 
   return (
     <Container>
-      <h1 className="text-center mb-4">{titulo}</h1>
-      <p className="lead text-center mb-5">{descripcion}</p>
+      <h1 className="text-center mb-4">{config.title}</h1>
+      <p className="lead text-center mb-5">{config.description}</p>
 
       {errores.length > 0 && (
         <Alert variant="danger">
@@ -203,11 +115,11 @@ export default function ClienteFormularioPage() {
         <div className="d-grid gap-2">
           <Button 
             type="submit" 
-            variant={varianteBoton} 
+            variant={config.buttonVariant} 
             disabled={saving || (isEditing && !hayChangios())}
           >
-            <i className={`${iconoBoton} me-2`}></i>
-            {saving ? textoBotonCargando : textoBoton}
+            <i className={`${config.icon} me-2`}></i>
+            {saving ? 'Guardando...' : config.buttonText}
           </Button>
 
           <Button
