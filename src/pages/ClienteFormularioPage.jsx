@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
@@ -6,97 +5,29 @@ import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
 import Spinner from 'react-bootstrap/Spinner'
 
-import { getClienteById, updateCliente } from '../services/clientesService'
+import { useClienteForm } from '../hooks/useClienteForm'
+import { FORM_CONFIG } from '../constants/formConfig'
 
-export default function ClienteEditar() {
+export default function ClienteFormularioPage() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const isEditing = Boolean(id)
 
-  const [formData, setFormData] = useState({
-    nombre: '',
-    apellido: '',
-    email: '',
-    telefono: '',
-    direccion: ''
-  })
+  const {
+    formData,
+    loading,
+    saving,
+    errores,
+    handleChange,
+    hayChangios,
+    submitForm
+  } = useClienteForm(isEditing, id)
 
-  const [datosOriginales, setDatosOriginales] = useState({
-    nombre: '',
-    apellido: '',
-    email: '',
-    telefono: '',
-    direccion: ''
-  })
-
-  const [loading, setLoading] = useState(true)
-  const [saving, setSaving] = useState(false)
-  const [errores, setErrores] = useState([])
-
-  useEffect(() => {
-    async function cargarCliente() {
-      try {
-        const data = await getClienteById(id)
-        const datosCliente = {
-          nombre: data.nombre,
-          apellido: data.apellido,
-          email: data.email,
-          telefono: data.telefono || '',
-          direccion: data.direccion || ''
-        }
-        setFormData(datosCliente)
-        setDatosOriginales(datosCliente)
-      } catch (err) {
-        setErrores([err.message])
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    cargarCliente()
-  }, [id])
-
-  // Función para detectar si hay cambios
-  function hayChangios() {
-    return JSON.stringify(formData) !== JSON.stringify(datosOriginales)
-  }
-
-  function handleChange(e) {
-    const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
-  }
-
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    
-    // Validar que haya cambios
-    if (!hayChangios()) {
-      setErrores(['No hay cambios que guardar'])
-      return
-    }
-    
-    setErrores([])
-    setSaving(true)
-
-    try {
-      await updateCliente(id, {
-        ...formData,
-        telefono: formData.telefono || null,
-        direccion: formData.direccion || null
-      })
-
+    const success = await submitForm()
+    if (success) {
       navigate('/')
-    } catch (err) {
-      if (Array.isArray(err.detail)) {
-        const mensajes = err.detail.map(e => e.msg)
-        setErrores(mensajes)
-      } else {
-        setErrores([err.message || 'Error desconocido'])
-      }
-    } finally {
-      setSaving(false)
     }
   }
 
@@ -104,16 +35,17 @@ export default function ClienteEditar() {
     return (
       <div className="text-center my-5">
         <Spinner animation="border" />
+        <p className="mt-3">Cargando datos del cliente...</p>
       </div>
     )
   }
 
+  const config = isEditing ? FORM_CONFIG.EDIT : FORM_CONFIG.CREATE
+
   return (
     <Container>
-      <h1 className="text-center mb-4">Editar Cliente</h1>
-      <p className="lead text-center mb-5">
-        Modifique los datos del cliente y guarde los cambios.
-      </p>
+      <h1 className="text-center mb-4">{config.title}</h1>
+      <p className="lead text-center mb-5">{config.description}</p>
 
       {errores.length > 0 && (
         <Alert variant="danger">
@@ -183,11 +115,11 @@ export default function ClienteEditar() {
         <div className="d-grid gap-2">
           <Button 
             type="submit" 
-            variant="success" 
-            disabled={saving || !hayChangios()}
+            variant={config.buttonVariant} 
+            disabled={saving || (isEditing && !hayChangios())}
           >
-            <i className="bi bi-check-circle me-2"></i>
-            {saving ? 'Guardando...' : 'Guardar Cambios'}
+            <i className={`${config.icon} me-2`}></i>
+            {saving ? 'Guardando...' : config.buttonText}
           </Button>
 
           <Button

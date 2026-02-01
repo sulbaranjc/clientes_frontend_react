@@ -1,7 +1,24 @@
 import { API_URL } from '../config'
+import { authService } from './authService'
+
+/**
+ * Maneja errores de autenticación en las respuestas de la API
+ */
+function handleAuthError(response) {
+  if (response.status === 401) {
+    // Token expirado o inválido
+    authService.logout()
+    window.location.href = '/login'
+    throw new Error('Sesión expirada. Por favor, inicia sesión nuevamente.')
+  }
+}
 
 export async function getClientes() {
-  const response = await fetch(`${API_URL}/clientes`)
+  const response = await fetch(`${API_URL}/clientes`, {
+    headers: authService.getAuthHeaders()
+  })
+
+  handleAuthError(response)
 
   if (!response.ok) {
     throw new Error('Error al obtener los clientes')
@@ -13,11 +30,11 @@ export async function getClientes() {
 export async function createCliente(data) {
   const response = await fetch(`${API_URL}/clientes`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: authService.getAuthHeaders(),
     body: JSON.stringify(data)
   })
+
+  handleAuthError(response)
 
   if (response.status === 409) {
     throw new Error('Ya existe un cliente con ese email')
