@@ -9,11 +9,13 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import { Link } from 'react-router-dom'
 import ConfirmDeleteModal from '../components/ConfirmDeleteModal'
 import { deleteCliente } from '../services/clientesService'
+import { usePermissions } from '../hooks/usePermissions'
 
 
 import { getClientes } from '../services/clientesService'
 
 export default function ClientesList() {
+  const { canCreate, canEdit, canDelete } = usePermissions()
   const [clientes, setClientes] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -83,10 +85,22 @@ async function confirmarEliminacion() {
       </p>
 
       <div className="mb-3">
-        <Button as={Link} to="/clientes/nuevo" variant="primary">
+        <Button 
+          as={Link} 
+          to="/clientes/nuevo" 
+          variant="primary"
+          disabled={!canCreate}
+          title={!canCreate ? 'No tienes permisos para crear clientes' : 'Crear nuevo cliente'}
+        >
           <i className="bi bi-plus-lg me-2"></i>
           Agregar Cliente
         </Button>
+        {!canCreate && (
+          <small className="text-muted ms-2">
+            <i className="bi bi-info-circle me-1"></i>
+            Solo usuarios con rol "admin" pueden crear clientes
+          </small>
+        )}
       </div>
 
       {/* Barra de búsqueda */}
@@ -181,7 +195,8 @@ async function confirmarEliminacion() {
                           size="sm"
                           variant="warning"
                           className="me-2"
-                          title="Editar cliente"
+                          disabled={!canEdit}
+                          title={!canEdit ? 'No tienes permisos para editar' : 'Editar cliente'}
                         >
                           <i className="bi bi-pencil-square"></i>
                         </Button>
@@ -189,7 +204,8 @@ async function confirmarEliminacion() {
                         <Button
                           size="sm"
                           variant="danger"
-                          title="Eliminar cliente"
+                          disabled={!canDelete}
+                          title={!canDelete ? 'No tienes permisos para eliminar' : 'Eliminar cliente'}
                           onClick={() => abrirModal(cliente)}
                         >
                           <i className="bi bi-trash"></i>

@@ -42,7 +42,8 @@ export const authService = {
       this.setToken(data.access_token)
       this.setUser({
         username: username,
-        token_type: data.token_type
+        token_type: data.token_type,
+        rol: data.rol
       })
 
       return data

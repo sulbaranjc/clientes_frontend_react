@@ -1,6 +1,7 @@
 import React from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import ModuleCard from '../components/ModuleCard'
+import Badge from 'react-bootstrap/Badge'
 
 const HomePage = () => {
   const { user } = useAuth()
@@ -36,6 +37,15 @@ const HomePage = () => {
           <h1 className="display-4 mb-3">
             <i className="bi bi-house-door me-3"></i>
             Bienvenido{user?.username ? `, ${user.username}` : ''}
+            {user?.rol && (
+              <Badge 
+                bg={user.rol === 'admin' ? 'danger' : 'info'} 
+                className="ms-3"
+                style={{ fontSize: '0.5em', verticalAlign: 'middle' }}
+              >
+                {user.rol.toUpperCase()}
+              </Badge>
+            )}
           </h1>
           <p className="lead text-muted">
             Seleccione un módulo para comenzar

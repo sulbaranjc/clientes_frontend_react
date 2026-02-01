@@ -7,9 +7,11 @@ import Badge from 'react-bootstrap/Badge'
 import logo from '../assets/img/logo_jc.svg'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { usePermissions } from '../hooks/usePermissions'
 
 export default function AppNavbar() {
   const { isAuthenticated, user, logout } = useAuth()
+  const { canCreate } = usePermissions()
 
   const handleLogout = () => {
     logout()
@@ -36,10 +38,12 @@ export default function AppNavbar() {
                     <i className="bi bi-list me-2"></i>
                     Ver Todos
                   </NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/clientes/nuevo">
-                    <i className="bi bi-plus-circle me-2"></i>
-                    Nuevo Cliente
-                  </NavDropdown.Item>
+                  {canCreate && (
+                    <NavDropdown.Item as={Link} to="/clientes/nuevo">
+                      <i className="bi bi-plus-circle me-2"></i>
+                      Nuevo Cliente
+                    </NavDropdown.Item>
+                  )}
                 </NavDropdown>
 
                 <NavDropdown 
@@ -54,6 +58,11 @@ export default function AppNavbar() {
                   <NavDropdown.Item disabled>
                     <Badge bg="success" className="me-2">Conectado</Badge>
                     {user?.username}
+                    {user?.rol && (
+                      <Badge bg={user.rol === 'admin' ? 'danger' : 'info'} className="ms-2">
+                        {user.rol}
+                      </Badge>
+                    )}
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item as={Link} to="/change-password">
