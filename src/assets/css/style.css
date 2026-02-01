@@ -28,6 +28,68 @@ a:hover {
 }
 
 /* ********** Bootstrap Styles ********** */
+
+/* ********** Authentication Styles ********** */
+.auth-container {
+  min-height: calc(100vh - 200px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-card {
+  background: rgba(255, 255, 255, 0.95);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: none !important;
+}
+
+.login-card .card-body {
+  padding: 3rem;
+}
+
+@media (max-width: 768px) {
+  .login-card .card-body {
+    padding: 2rem 1.5rem;
+  }
+}
+
+/* ********** Authentication Icons ********** */
+.auth-icon {
+  font-size: 4rem;
+  color: var(--link-color);
+  margin-bottom: 1rem;
+}
+
+/* ********** User Badge ********** */
+.user-badge {
+  background: linear-gradient(135deg, var(--first-color), var(--link-color)) !important;
+  border: none;
+}
+
+.login-card .card-body {
+  padding: 3rem;
+}
+
+@media (max-width: 768px) {
+  .login-card .card-body {
+    padding: 2rem 1.5rem;
+  }
+}
+
+/* ********** Authentication Icons ********** */
+.auth-icon {
+  font-size: 4rem;
+  color: var(--link-color);
+  margin-bottom: 1rem;
+}
+
+/* ********** User Badge ********** */
+.user-badge {
+  background: linear-gradient(135deg, var(--first-color), var(--link-color)) !important;
+  border: none;
+}
+
 .bg-dark {
   background-color: var(--second-color) !important;
 }
