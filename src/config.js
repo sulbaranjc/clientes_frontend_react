@@ -6,5 +6,6 @@ export const AUTH_CONFIG = {
   tokenKey: 'jwt_token',
   userKey: 'user_data',
   loginEndpoint: '/auth/login',
+  changePasswordEndpoint: '/auth/cambiar-password',
   tokenType: 'Bearer'
 }

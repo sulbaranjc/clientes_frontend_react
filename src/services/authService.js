@@ -133,5 +133,49 @@ export const authService = {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     }
+  },
+
+  /**
+   * Cambia la contraseña del usuario autenticado
+   * @param {string} passwordActual - Contraseña actual
+   * @param {string} passwordNueva - Nueva contraseña
+   * @param {string} passwordConfirmacion - Confirmación de nueva contraseña
+   * @returns {Object} Respuesta del servidor
+   */
+  async changePassword(passwordActual, passwordNueva, passwordConfirmacion) {
+    try {
+      const response = await fetch(`${API_URL}/auth/cambiar-password`, {
+        method: 'POST',
+        headers: this.getAuthHeaders(),
+        body: JSON.stringify({
+          password_actual: passwordActual,
+          password_nueva: passwordNueva,
+          password_confirmacion: passwordConfirmacion
+        })
+      })
+
+      if (response.status === 401) {
+        throw new Error('Contraseña actual incorrecta')
+      }
+
+      if (response.status === 400) {
+        const errorData = await response.json()
+        throw new Error(errorData.detail || 'Las nuevas contraseñas no coinciden')
+      }
+
+      if (!response.ok) {
+        const errorText = await response.text()
+        throw new Error(`Error en el servidor: ${response.status} - ${errorText}`)
+      }
+
+      const data = await response.json()
+      return data
+
+    } catch (error) {
+      if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+        throw new Error('No se pudo conectar al servidor. Verifique que el backend esté corriendo.')
+      }
+      throw error
+    }
   }
 }

@@ -7,6 +7,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import LoginPage from './pages/LoginPage'
 import ClientesList from './pages/ClientesList'
 import ClienteFormularioPage from './pages/ClienteFormularioPage'
+import ChangePasswordPage from './pages/ChangePasswordPage'
 
 export default function App() {
   return (
@@ -35,6 +36,12 @@ export default function App() {
             <Route path="/clientes/editar/:id" element={
               <ProtectedRoute>
                 <ClienteFormularioPage />
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/change-password" element={
+              <ProtectedRoute>
+                <ChangePasswordPage />
               </ProtectedRoute>
             } />
           </Routes>

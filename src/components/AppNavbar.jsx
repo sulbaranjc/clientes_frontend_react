@@ -56,6 +56,11 @@ export default function AppNavbar() {
                     {user?.username}
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
+                  <NavDropdown.Item as={Link} to="/change-password">
+                    <i className="bi bi-key me-2"></i>
+                    Cambiar Contraseña
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
                   <NavDropdown.Item onClick={handleLogout}>
                     <i className="bi bi-box-arrow-right me-2"></i>
                     Cerrar Sesión
