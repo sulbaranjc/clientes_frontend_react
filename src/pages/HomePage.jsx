@@ -1,9 +1,32 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import ModuleCard from '../components/ModuleCard'
 
 const HomePage = () => {
   const { user } = useAuth()
+
+  // Configuración de módulos del dashboard
+  const modules = [
+    {
+      title: 'Clientes',
+      icon: 'bi bi-people-fill',
+      description: 'Gestión completa de clientes: crear, editar, eliminar y filtrar',
+      link: '/clientes',
+      active: true
+    },
+    {
+      title: 'Configuración',
+      icon: 'bi bi-gear-fill',
+      description: 'Módulo en desarrollo',
+      active: false
+    },
+    {
+      title: 'Reportes',
+      icon: 'bi bi-graph-up',
+      description: 'Módulo en desarrollo',
+      active: false
+    }
+  ]
 
   return (
     <div className="container mt-5">
@@ -22,70 +45,16 @@ const HomePage = () => {
 
       {/* Cards de módulos */}
       <div className="row g-4 justify-content-center">
-        {/* Módulo de Clientes */}
-        <div className="col-md-6 col-lg-4">
-          <Link to="/clientes" className="text-decoration-none">
-            <div className="card h-100 shadow-sm hover-card">
-              <div className="card-body text-center p-5">
-                <div className="mb-4">
-                  <i className="bi bi-people-fill text-primary" style={{ fontSize: '4rem' }}></i>
-                </div>
-                <h3 className="card-title mb-3">Clientes</h3>
-                <p className="card-text text-muted">
-                  Gestión completa de clientes: crear, editar, eliminar y filtrar
-                </p>
-                <div className="mt-4">
-                  <span className="btn btn-primary">
-                    <i className="bi bi-arrow-right-circle me-2"></i>
-                    Acceder
-                  </span>
-                </div>
-              </div>
-            </div>
-          </Link>
-        </div>
-
-        {/* Módulo futuro - Ejemplo */}
-        <div className="col-md-6 col-lg-4">
-          <div className="card h-100 shadow-sm" style={{ opacity: 0.6, cursor: 'not-allowed' }}>
-            <div className="card-body text-center p-5">
-              <div className="mb-4">
-                <i className="bi bi-gear-fill text-secondary" style={{ fontSize: '4rem' }}></i>
-              </div>
-              <h3 className="card-title mb-3">Configuración</h3>
-              <p className="card-text text-muted">
-                Módulo en desarrollo
-              </p>
-              <div className="mt-4">
-                <span className="btn btn-secondary disabled">
-                  <i className="bi bi-lock-fill me-2"></i>
-                  Próximamente
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Módulo futuro - Ejemplo */}
-        <div className="col-md-6 col-lg-4">
-          <div className="card h-100 shadow-sm" style={{ opacity: 0.6, cursor: 'not-allowed' }}>
-            <div className="card-body text-center p-5">
-              <div className="mb-4">
-                <i className="bi bi-graph-up text-secondary" style={{ fontSize: '4rem' }}></i>
-              </div>
-              <h3 className="card-title mb-3">Reportes</h3>
-              <p className="card-text text-muted">
-                Módulo en desarrollo
-              </p>
-              <div className="mt-4">
-                <span className="btn btn-secondary disabled">
-                  <i className="bi bi-lock-fill me-2"></i>
-                  Próximamente
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+        {modules.map((module, index) => (
+          <ModuleCard
+            key={index}
+            title={module.title}
+            icon={module.icon}
+            description={module.description}
+            link={module.link}
+            active={module.active}
+          />
+        ))}
       </div>
 
       {/* Información adicional */}
