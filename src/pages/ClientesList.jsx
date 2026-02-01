@@ -6,6 +6,7 @@ import Spinner from 'react-bootstrap/Spinner'
 import Alert from 'react-bootstrap/Alert'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
+import Pagination from 'react-bootstrap/Pagination'
 import { Link } from 'react-router-dom'
 import ConfirmDeleteModal from '../components/ConfirmDeleteModal'
 import { deleteCliente } from '../services/clientesService'
@@ -22,6 +23,8 @@ export default function ClientesList() {
   const [showModal, setShowModal] = useState(false)
   const [clienteSeleccionado, setClienteSeleccionado] = useState(null)
   const [busqueda, setBusqueda] = useState('')
+  const [paginaActual, setPaginaActual] = useState(1)
+  const registrosPorPagina = 10
 
   useEffect(() => {
     async function cargarClientes() {
@@ -52,6 +55,23 @@ export default function ClientesList() {
       (cliente.direccion?.toLowerCase().includes(terminoBusqueda))
     )
   })
+
+  // Lógica de paginación
+  const totalPaginas = Math.ceil(clientesFiltrados.length / registrosPorPagina)
+  const indiceInicio = (paginaActual - 1) * registrosPorPagina
+  const indiceFin = indiceInicio + registrosPorPagina
+  const clientesPaginados = clientesFiltrados.slice(indiceInicio, indiceFin)
+
+  // Resetear a página 1 cuando cambia la búsqueda
+  useEffect(() => {
+    setPaginaActual(1)
+  }, [busqueda])
+
+  // Función para cambiar de página
+  const cambiarPagina = (numeroPagina) => {
+    setPaginaActual(numeroPagina)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
 function abrirModal(cliente) {
   setClienteSeleccionado(cliente)
@@ -120,9 +140,12 @@ async function confirmarEliminacion() {
             </Button>
           )}
         </InputGroup>
-        {busqueda && (
+        {clientesFiltrados.length > 0 && (
           <small className="text-muted mt-2 d-block">
-            Mostrando {clientesFiltrados.length} de {clientes.length} cliente(s)
+            Mostrando {indiceInicio + 1}-{Math.min(indiceFin, clientesFiltrados.length)} de {clientesFiltrados.length} cliente(s)
+            {busqueda && clientes.length !== clientesFiltrados.length && (
+              <span> (filtrado de {clientes.length} totales)</span>
+            )}
           </small>
         )}
       </div>
@@ -161,8 +184,8 @@ async function confirmarEliminacion() {
                 </tr>
               </thead>
               <tbody>
-                {clientesFiltrados.length > 0 ? (
-                  clientesFiltrados.map(cliente => (
+                {clientesPaginados.length > 0 ? (
+                  clientesPaginados.map(cliente => (
                     <tr key={cliente.id}>
                       <td>{cliente.nombre}</td>
                       <td>{cliente.apellido}</td>
@@ -222,14 +245,66 @@ async function confirmarEliminacion() {
             </Table>
           </div>
 
-          <div className="card-footer text-muted text-center">
-            <small>
-              Total de clientes: <strong>{clientesFiltrados.length}</strong>
-              {busqueda && clientes.length !== clientesFiltrados.length && (
-                <span> (de {clientes.length} totales)</span>
-              )}
-            </small>
-          </div>
+          {/* Paginación */}
+          {totalPaginas > 1 && (
+            <div className="card-footer">
+              <div className="d-flex justify-content-between align-items-center">
+                <small className="text-muted">
+                  Página {paginaActual} de {totalPaginas}
+                </small>
+                
+                <Pagination className="mb-0">
+                  <Pagination.First 
+                    onClick={() => cambiarPagina(1)} 
+                    disabled={paginaActual === 1}
+                  />
+                  <Pagination.Prev 
+                    onClick={() => cambiarPagina(paginaActual - 1)} 
+                    disabled={paginaActual === 1}
+                  />
+                  
+                  {[...Array(totalPaginas)].map((_, index) => {
+                    const numeroPagina = index + 1
+                    // Mostrar solo 5 páginas alrededor de la actual
+                    if (
+                      numeroPagina === 1 ||
+                      numeroPagina === totalPaginas ||
+                      (numeroPagina >= paginaActual - 2 && numeroPagina <= paginaActual + 2)
+                    ) {
+                      return (
+                        <Pagination.Item
+                          key={numeroPagina}
+                          active={numeroPagina === paginaActual}
+                          onClick={() => cambiarPagina(numeroPagina)}
+                        >
+                          {numeroPagina}
+                        </Pagination.Item>
+                      )
+                    } else if (
+                      numeroPagina === paginaActual - 3 ||
+                      numeroPagina === paginaActual + 3
+                    ) {
+                      return <Pagination.Ellipsis key={numeroPagina} disabled />
+                    }
+                    return null
+                  })}
+                  
+                  <Pagination.Next 
+                    onClick={() => cambiarPagina(paginaActual + 1)} 
+                    disabled={paginaActual === totalPaginas}
+                  />
+                  <Pagination.Last 
+                    onClick={() => cambiarPagina(totalPaginas)} 
+                    disabled={paginaActual === totalPaginas}
+                  />
+                </Pagination>
+
+                <small className="text-muted">
+                  Total: <strong>{clientesFiltrados.length}</strong> cliente(s)
+                </small>
+              </div>
+            </div>
+          )}
         </div>
       )}
       <ConfirmDeleteModal
