@@ -32,7 +32,7 @@ export default function AppNavbar() {
             {isAuthenticated ? (
               <>
                 <NavDropdown title="Clientes" id="nav-clientes">
-                  <NavDropdown.Item as={Link} to="/">
+                  <NavDropdown.Item as={Link} to="/clientes">
                     <i className="bi bi-list me-2"></i>
                     Ver Todos
                   </NavDropdown.Item>

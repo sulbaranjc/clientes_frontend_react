@@ -55,7 +55,11 @@ export async function createCliente(data) {
 /* comentario */
 
 export async function getClienteById(id) {
-  const response = await fetch(`${API_URL}/clientes/${id}`)
+  const response = await fetch(`${API_URL}/clientes/${id}`, {
+    headers: authService.getAuthHeaders()
+  })
+
+  handleAuthError(response)
 
   if (response.status === 404) {
     throw new Error('Cliente no encontrado')
@@ -71,11 +75,11 @@ export async function getClienteById(id) {
 export async function updateCliente(id, data) {
   const response = await fetch(`${API_URL}/clientes/${id}`, {
     method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: authService.getAuthHeaders(),
     body: JSON.stringify(data)
   })
+
+  handleAuthError(response)
 
   if (response.status === 404) {
     throw new Error('Cliente no encontrado')
@@ -100,8 +104,11 @@ export async function updateCliente(id, data) {
 
 export async function deleteCliente(id) {
   const response = await fetch(`${API_URL}/clientes/${id}`, {
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: authService.getAuthHeaders()
   })
+
+  handleAuthError(response)
 
   if (response.status === 404) {
     throw new Error('Cliente no encontrado')

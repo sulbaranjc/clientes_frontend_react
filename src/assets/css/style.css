@@ -164,3 +164,23 @@ main {
     background-color: transparent;
   }
 }
+
+/* ********** Dashboard Styles ********** */
+.hover-card {
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.hover-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  border-color: var(--link-color);
+}
+
+.hover-card .card-body {
+  transition: all 0.3s ease;
+}
+
+.hover-card:hover .card-body {
+  background-color: rgba(80, 158, 227, 0.05);
+}

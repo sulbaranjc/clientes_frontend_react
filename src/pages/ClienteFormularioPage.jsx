@@ -27,7 +27,7 @@ export default function ClienteFormularioPage() {
     e.preventDefault()
     const success = await submitForm()
     if (success) {
-      navigate('/')
+      navigate('/clientes')
     }
   }
 
@@ -124,7 +124,7 @@ export default function ClienteFormularioPage() {
 
           <Button
             variant="secondary"
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/clientes')}
           >
             Cancelar
           </Button>

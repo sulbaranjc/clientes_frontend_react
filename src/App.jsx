@@ -5,6 +5,7 @@ import AppFooter from './components/AppFooter'
 import ProtectedRoute from './components/ProtectedRoute'
 
 import LoginPage from './pages/LoginPage'
+import HomePage from './pages/HomePage'
 import ClientesList from './pages/ClientesList'
 import ClienteFormularioPage from './pages/ClienteFormularioPage'
 import ChangePasswordPage from './pages/ChangePasswordPage'
@@ -22,6 +23,12 @@ export default function App() {
             
             {/* Rutas protegidas - requieren autenticación */}
             <Route path="/" element={
+              <ProtectedRoute>
+                <HomePage />
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/clientes" element={
               <ProtectedRoute>
                 <ClientesList />
               </ProtectedRoute>
