@@ -84,22 +84,17 @@ async function confirmarEliminacion() {
         Lista de clientes registrados en el sistema. deploy by git-hub actions CI-CD..
       </p>
 
-      <div className="mb-3">
-        <Button 
-          as={Link} 
-          to="/clientes/nuevo" 
-          variant="primary"
-          disabled={!canCreate}
-          title={!canCreate ? 'No tienes permisos para crear clientes' : 'Crear nuevo cliente'}
-        >
-          <i className="bi bi-plus-lg me-2"></i>
-          Agregar Cliente
-        </Button>
-        {!canCreate && (
-          <small className="text-muted ms-2">
-            <i className="bi bi-info-circle me-1"></i>
-            Solo usuarios con rol "admin" pueden crear clientes
-          </small>
+      <div className="mb-3" style={{ minHeight: '38px' }}>
+        {canCreate && (
+          <Button 
+            as={Link} 
+            to="/clientes/nuevo" 
+            variant="primary"
+            title="Crear nuevo cliente"
+          >
+            <i className="bi bi-plus-lg me-2"></i>
+            Agregar Cliente
+          </Button>
         )}
       </div>
 
@@ -188,28 +183,30 @@ async function confirmarEliminacion() {
                         <i className="bi bi-geo-alt me-1"></i>
                         {cliente.direccion || '-'}
                       </td>
-                      <td className="text-center">
-                        <Button
-                          as={Link}
-                          to={`/clientes/editar/${cliente.id}`}
-                          size="sm"
-                          variant="warning"
-                          className="me-2"
-                          disabled={!canEdit}
-                          title={!canEdit ? 'No tienes permisos para editar' : 'Editar cliente'}
-                        >
-                          <i className="bi bi-pencil-square"></i>
-                        </Button>
+                      <td className="text-center" style={{ minWidth: '100px' }}>
+                        {canEdit && (
+                          <Button
+                            as={Link}
+                            to={`/clientes/editar/${cliente.id}`}
+                            size="sm"
+                            variant="warning"
+                            className="me-2"
+                            title="Editar cliente"
+                          >
+                            <i className="bi bi-pencil-square"></i>
+                          </Button>
+                        )}
 
-                        <Button
-                          size="sm"
-                          variant="danger"
-                          disabled={!canDelete}
-                          title={!canDelete ? 'No tienes permisos para eliminar' : 'Eliminar cliente'}
-                          onClick={() => abrirModal(cliente)}
-                        >
-                          <i className="bi bi-trash"></i>
-                        </Button>
+                        {canDelete && (
+                          <Button
+                            size="sm"
+                            variant="danger"
+                            title="Eliminar cliente"
+                            onClick={() => abrirModal(cliente)}
+                          >
+                            <i className="bi bi-trash"></i>
+                          </Button>
+                        )}
                       </td>
                     </tr>
                   ))
