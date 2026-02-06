@@ -79,7 +79,7 @@ async function confirmarEliminacion() {
     <Container>
       <h1 className="text-center mb-4">Gestión de Clientes</h1>
       <p className="lead text-center mb-5">
-        Lista de clientes registrados en el sistema. deploy by Juan..
+        Lista de clientes registrados en el sistema. deploy by Juan Carlos..
       </p>
 
       <div className="mb-3">
