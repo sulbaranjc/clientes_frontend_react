@@ -141,7 +141,6 @@ a:hover {
 /* ********** My Styles ********** */
 main {
   flex: 1;
-  min-height: 100vh;
 }
 
 .bg-gradient-blue-green {
