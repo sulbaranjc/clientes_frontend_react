@@ -1,4 +1,4 @@
-# 📚 Sistema de Gestión de Clientes - Frontend React by JC
+# 📚 Sistema de Gestión de Clientes - Frontend React by JC xxxx
 
 > **Proyecto Educativo**: Aplicación frontend desarrollada con React + Vite para la gestión de clientes, diseñada como material didáctico para estudiantes de Desarrollo de Aplicaciones Web y Multiplataforma.
 
