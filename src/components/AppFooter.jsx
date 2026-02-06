@@ -15,7 +15,7 @@ export default function AppFooter() {
         </nav>
 
         <small className="text-white">
-          &copy; 2026 @sulbaranjc. Hecho con fines educativos.
+          &copy; 2026 @sulbaranjc. Integración Continua (CI) y Entrega/Despliegue Continuo (CD). Hecho con fines educativos.
         </small>
       </Container>
     </footer>
