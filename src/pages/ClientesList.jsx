@@ -99,11 +99,7 @@ async function confirmarEliminacion() {
 
   return (
     <Container>
-      <h1 className="text-center mb-4">Gestión de Clientes</h1>
-      <p className="lead text-center mb-5">
-        Lista de clientes registrados en el sistema. deploy by git-hub actions con React y Bootstrap.
-      </p>
-
+      <h1 className="text-center mb-2">Gestión de Clientes</h1>
       <div className="mb-3" style={{ minHeight: '38px' }}>
         {canCreate && (
           <Button 
