@@ -33,7 +33,7 @@ jobs:
             
             git fetch origin || { echo "ERROR: No se pudo descargar de GitHub"; exit 1; }
             git checkout deploy || { echo "ERROR: No se pudo cambiar a rama deploy"; exit 1; }
-            git pull origin deploy || { echo "ERROR: No se pudo hacer pull de deploy"; exit 1; }
+            git reset --hard origin/deploy || { echo "ERROR: No se pudo actualizar a la última versión"; exit 1; }
             
             echo "✓ Código actualizado correctamente"
             echo ""
