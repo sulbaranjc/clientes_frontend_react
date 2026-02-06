@@ -49,7 +49,7 @@ export default function LoginPage() {
             <Card.Body className="p-4">
               <div className="text-center mb-4">
                 <i className="bi bi-person-circle display-4 text-primary"></i>
-                <h3 className="mt-3 mb-1">Iniciar Sesión</h3>
+                <h3 className="mt-3 mb-1">Iniciar Sesión XXXX</h3>
                 <p className="text-muted">Ingresa tus credenciales para continuar</p>
               </div>
 
