@@ -101,7 +101,7 @@ async function confirmarEliminacion() {
     <Container>
       <h1 className="text-center mb-4">Gestión de Clientes</h1>
       <p className="lead text-center mb-5">
-        Lista de clientes registrados en el sistema. deploy by git-hub actions CCCJJJJJ..
+        Lista de clientes registrados en el sistema. deploy by git-hub actions PRUEBA
       </p>
 
       <div className="mb-3" style={{ minHeight: '38px' }}>
